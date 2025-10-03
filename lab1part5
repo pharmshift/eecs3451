@@ -1,49 +1,49 @@
-%% Q5: Continuous-time signal plots
-clear; clc; close all;
+%% Question 5 - Complete Solution
+% No loops used as required
 
-% Time axis
-t = -5:0.01:5;   % suitable time step
+%% Part (a)
+t = -5:0.01:5;
 
-% ------------------ Part (a) -------------------
-% Given signal:
-% x(t) = (25/t - 3 + j*2*pi*t) * exp(-j*sgn(t))
+% Create the original signal x(t)
+sgn_t = sign(t);
+exponent = exp(0.25*t + 1j*2*pi*t);
+x_t = -3 * sgn_t .* exponent;
 
-x = (25./t - 3 + 1j*2*pi*t) .* exp(-1j*sign(t));
-
-% Plot real and imaginary parts
+% Plot real and imaginary components of x(t)
 figure;
-
 subplot(2,1,1);
-plot(t, real(x), 'b', 'LineWidth', 1.5);
+plot(t, real(x_t), 'b-', 'LineWidth', 1.5);
+title('Real Component of x(t)');
+xlabel('Time t');
+ylabel('Real(x(t))');
 grid on;
-xlabel('t'); ylabel('Re\{x(t)\}');
-title('Real part of x(t)');
 
 subplot(2,1,2);
-plot(t, imag(x), 'r', 'LineWidth', 1.5);
+plot(t, imag(x_t), 'r-', 'LineWidth', 1.5);
+title('Imaginary Component of x(t)');
+xlabel('Time t');
+ylabel('Imag(x(t))');
 grid on;
-xlabel('t'); ylabel('Im\{x(t)\}');
-title('Imaginary part of x(t)');
 
-% ------------------ Part (b) -------------------
-% Multiply x(t) by rect(t/4). MATLAB has rectpuls.
-% rectpuls(t, width) = 1 if |t| < width/2, else 0
-rect_sig = rectpuls(t, 4);    % width = 4 → support = [-2, 2]
+%% Part (b)
+% Create rectangular pulse rect(t/4)
+rect_pulse = (abs(t) <= 2);
 
-xnew = x .* rect_sig;
+% Create the new signal x_new(t)
+x_new = x_t .* rect_pulse;
 
-% Plot real and imaginary parts of xnew(t)
+% Plot real and imaginary components of x_new(t)
 figure;
-
 subplot(2,1,1);
-plot(t, real(xnew), 'b', 'LineWidth', 1.5);
+plot(t, real(x_new), 'b-', 'LineWidth', 1.5);
+title('Real Component of x_{new}(t)');
+xlabel('Time t');
+ylabel('Real(x_{new}(t))');
 grid on;
-xlabel('t'); ylabel('Re\{x_{new}(t)\}');
-title('Real part of x_{new}(t)');
 
 subplot(2,1,2);
-plot(t, imag(xnew), 'r', 'LineWidth', 1.5);
+plot(t, imag(x_new), 'r-', 'LineWidth', 1.5);
+title('Imaginary Component of x_{new}(t)');
+xlabel('Time t');
+ylabel('Imag(x_{new}(t))');
 grid on;
-xlabel('t'); ylabel('Im\{x_{new}(t)\}');
-title('Imaginary part of x_{new}(t)');
-
